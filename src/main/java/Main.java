@@ -1,4 +1,29 @@
-package PACKAGE_NAME;
+import com.sda.first_project.production.WorkerConfig;
+import com.sda.first_project.production.WorkerMotto;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+import com.sda.first_project.production.Worker;
 
 public class Main {
+    public static void main(String[] args) {
+        String[] beans = new String[] {"tools.xml","worker.xml"};
+        ApplicationContext xmlApplicationContext = new ClassPathXmlApplicationContext(beans);
+
+        Worker testWorker = xmlApplicationContext.getBean(Worker.class);
+
+
+        System.out.println(testWorker.getAge());
+        System.out.println(testWorker.getWorkerMotto().toString());
+        System.out.println(testWorker);
+        ((ClassPathXmlApplicationContext) xmlApplicationContext).close();
+
+
+        ApplicationContext annotationApplicationContext = new AnnotationConfigApplicationContext(WorkerConfig.class);
+        WorkerMotto annotationWorkerMotto =  annotationApplicationContext.getBean(WorkerMotto.class);
+        System.out.println(annotationWorkerMotto);
+
+
+    }
+
 }
